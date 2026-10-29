@@ -17,3 +17,6 @@ assets/proxies/*
 out/*/*
 
 !**/.gitkeep
+
+# Python bytecode from the pipeline scripts
+__pycache__/

@@ -1,0 +1,267 @@
+{
+  "about": "Every book cut-out. Edit the anchors; never the boxes. resolve_crops.py finds each anchor's text with pdftotext -bbox, snaps outwards to the element's full ink (fills, rules, edge bars) on the 300 dpi render, adds the 8 px margin, and writes page and box (pixels at 300 dpi, [x0, y0, x1, y1]). bookPage is the men's page as brief 5.2 indexes it; the edition's own page is derived from it (women's = men's up to p42, then + 3). Modes: element (anchors, snapped, margin), day-page (a day page's header and session: the text column's width plus 12 pt, from 16 pt above anchor.first down to the last anchor, snapped), page (the whole trimmed page), cover-front (the front panel of a cover wrap, trimmed).",
+  "crops": [
+    {
+      "id": "s04-scoring-table",
+      "use": "main 4c",
+      "what": "Specialist against all-rounder table",
+      "edition": "mens",
+      "bookPage": 9,
+      "mode": "element",
+      "anchor": {
+        "first": "ATHLETE STRENGTH",
+        "last": "The all-rounder"
+      },
+      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "page": 9,
+      "box": [232, 1276, 1928, 1495]
+    },
+    {
+      "id": "s06-strength-windows",
+      "use": "main 6a SkillCard 1",
+      "what": "Strength Zone window table",
+      "edition": "mens",
+      "bookPage": 5,
+      "mode": "element",
+      "anchor": {
+        "first": "WINDOW LIFT SCORING",
+        "last": "windows"
+      },
+      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "page": 5,
+      "box": [232, 1502, 1928, 1847]
+    },
+    {
+      "id": "s06-worked-example",
+      "use": "main 6b",
+      "what": "A worked example (deadlift attempts)",
+      "edition": "mens",
+      "bookPage": 12,
+      "mode": "element",
+      "anchor": {
+        "first": "A WORKED EXAMPLE",
+        "last": "becomes."
+      },
+      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "page": 12,
+      "box": [210, 183, 1906, 704]
+    },
+    {
+      "id": "s06-split-jerk-focus",
+      "use": "main 6c, reel r5",
+      "what": "Split jerk focus by week",
+      "edition": "mens",
+      "bookPage": 14,
+      "mode": "element",
+      "anchor": {
+        "first": "WEEKS SPLIT JERK FOCUS",
+        "last": "12 Light singles"
+      },
+      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "page": 14,
+      "box": [210, 917, 1906, 1522]
+    },
+    {
+      "id": "s06-drills",
+      "use": "main 6c",
+      "what": "The drills (p14, correction 1)",
+      "edition": "mens",
+      "bookPage": 14,
+      "mode": "element",
+      "anchor": {
+        "first": "THE DRILLS",
+        "last": "confidence with the weight"
+      },
+      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "page": 14,
+      "box": [209, 1621, 1906, 2452]
+    },
+    {
+      "id": "s06-inside-each-window",
+      "use": "main 6d",
+      "what": "Inside each window",
+      "edition": "mens",
+      "bookPage": 144,
+      "mode": "element",
+      "anchor": {
+        "first": "Inside each window",
+        "last": "14:00-15:00"
+      },
+      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "page": 144,
+      "box": [209, 238, 1906, 1347]
+    },
+    {
+      "id": "s07-metconx-mens",
+      "use": "main 7a",
+      "what": "MetCon X heading, rule and table, men's",
+      "edition": "mens",
+      "bookPage": 6,
+      "mode": "element",
+      "anchor": {
+        "first": "MetCon X",
+        "last": "Row ",
+        "lastNth": 2
+      },
+      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "page": 6,
+      "box": [209, 518, 1906, 1507]
+    },
+    {
+      "id": "s07-metconx-womens",
+      "use": "main 7a (correction 7)",
+      "what": "MetCon X heading, rule and table, women's",
+      "edition": "womens",
+      "bookPage": 6,
+      "mode": "element",
+      "anchor": {
+        "first": "MetCon X",
+        "last": "Row ",
+        "lastNth": 2
+      },
+      "pdf": "assets/pdf/ATHX-2027-Womens.pdf",
+      "page": 6,
+      "box": [209, 518, 1906, 1507]
+    },
+    {
+      "id": "s07-where-time-goes",
+      "use": "main 7a",
+      "what": "Where the time goes",
+      "edition": "mens",
+      "bookPage": 20,
+      "mode": "element",
+      "anchor": {
+        "first": "Where the time goes",
+        "last": "Total"
+      },
+      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "page": 20,
+      "box": [209, 1119, 1906, 2214]
+    },
+    {
+      "id": "s07-db-bench",
+      "use": "main 7b SkillCard 2, reel r6",
+      "what": "The DB bench press, first paragraph",
+      "edition": "mens",
+      "bookPage": 21,
+      "mode": "element",
+      "anchor": {
+        "first": "The DB bench press",
+        "last": "not have done much pressing"
+      },
+      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "page": 21,
+      "box": [232, 1503, 1905, 1876]
+    },
+    {
+      "id": "s07-sandbag-carry",
+      "use": "main 7b SkillCard 3, reel r6",
+      "what": "Sandbag squats into the carry, first paragraph",
+      "edition": "mens",
+      "bookPage": 21,
+      "mode": "element",
+      "anchor": {
+        "first": "Sandbag squats into the carry",
+        "last": "most. The carry then uses"
+      },
+      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "page": 21,
+      "box": [232, 238, 1885, 610]
+    },
+    {
+      "id": "s08-run-pace",
+      "use": "main 8b",
+      "what": "Run pace table (three rows shown on screen)",
+      "edition": "mens",
+      "bookPage": 16,
+      "mode": "element",
+      "anchor": {
+        "first": "RUN PACE 3 KM TIME",
+        "last": "3:15 /km"
+      },
+      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "page": 16,
+      "box": [210, 1650, 1906, 2361]
+    },
+    {
+      "id": "s09-week2-monday",
+      "use": "main 9 background, 25%",
+      "what": "Week 2 Monday day page, whole",
+      "edition": "mens",
+      "bookPage": 53,
+      "mode": "page",
+      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "page": 53,
+      "box": [0, 38, 2100, 3037],
+      "texture": true
+    },
+    {
+      "id": "s10-heavy-strength",
+      "use": "main 10b",
+      "what": "Week 5 Wednesday, header to the lower heavy table",
+      "edition": "mens",
+      "bookPage": 79,
+      "mode": "day-page",
+      "anchor": {
+        "first": "WEEK ",
+        "last": "D Copenhagen Plank"
+      },
+      "gap": 12,
+      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "page": 79,
+      "box": [190, 160, 1942, 1369]
+    },
+    {
+      "id": "s10-athx-triangle",
+      "use": "main 10b",
+      "what": "Week 2 Tuesday, header to the ATHX Triangle table",
+      "edition": "mens",
+      "bookPage": 54,
+      "mode": "day-page",
+      "anchor": {
+        "first": "WEEK ",
+        "last": "Then: steady ski"
+      },
+      "gap": 12,
+      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "page": 54,
+      "box": [167, 160, 1915, 1226]
+    },
+    {
+      "id": "s10-run-and-ski",
+      "use": "main 10b",
+      "what": "Week 6 Saturday, header to the run and ski table",
+      "edition": "mens",
+      "bookPage": 90,
+      "mode": "day-page",
+      "anchor": {
+        "first": "WEEK ",
+        "last": "Score total ski metres"
+      },
+      "gap": 12,
+      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "page": 90,
+      "box": [167, 160, 1928, 1175]
+    },
+    {
+      "id": "s10-cover-mens",
+      "use": "main 10c, reel r7",
+      "what": "Front cover, men's",
+      "edition": "mens",
+      "mode": "cover-front",
+      "pdf": "assets/pdf/ATHX-2027-Mens-COVER-white.pdf",
+      "page": 1,
+      "box": [2245, 38, 4344, 3037]
+    },
+    {
+      "id": "s10-cover-womens",
+      "use": "main 10c, reel r7",
+      "what": "Front cover, women's",
+      "edition": "womens",
+      "mode": "cover-front",
+      "pdf": "assets/pdf/ATHX-2027-Womens-COVER-white.pdf",
+      "page": 1,
+      "box": [2247, 38, 4346, 3037]
+    }
+  ]
+}

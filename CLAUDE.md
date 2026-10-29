@@ -38,6 +38,7 @@ You work as a senior motion designer and editor, not a template filler.
 ```bash
 pipeline/bootstrap.sh     # tools, npm deps, fonts; ends with a 1 s test render
 pipeline/check_pdfs.sh    # page counts and RGB check of assets/pdf
+npm run cutouts           # pages, crops and cut-outs from the PDFs (bootstrap runs it)
 ```
 
 Not in git, so re-supply them after a reset: the book PDFs (`ATHX-2027-Mens.pdf`,
