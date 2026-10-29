@@ -11,6 +11,9 @@ pipeline/bootstrap.sh          # fresh container: restore tools, deps, fonts; 1 
 pipeline/bootstrap.sh --check  # report only
 npm run check                  # typecheck, facts and timings checks, VO fit report
 pipeline/check_pdfs.sh         # page counts and RGB check of assets/pdf
+npm run cutouts                # pages, crops, cut-outs and contact sheets from the PDFs
+pipeline/clean_vo.sh           # assets/audio/vo/*.wav -> vo-clean/, -16 LUFS
+pipeline/measure_loudness.sh   # EBU R128 report; --target -14 -1 for the final mix
 npm run studio                 # Remotion Studio (needs a port forward to view)
 npm run render:test            # the Gate 0 one-second render
 npm run still:test:portrait    # the same card at 1080 x 1920
@@ -20,8 +23,162 @@ npm run still:test:portrait    # the same card at 1080 x 1920
 
 | Gate | State |
 |---|---|
-| 0. Setup | **Complete 2026-10-29**: every input received and checked; awaiting the go-ahead for Gate 1 |
-| 1. Assets | Ready to start: colour interiors, covers and logo all in hand |
+| 0. Setup | Approved 2026-10-29 |
+| 1. Assets | **Delivered 2026-10-29 on branch `gate-1`, awaiting review** (Q10 to Q13) |
+| 2. Design | Next: components, stills in both aspects, 10 s motion test |
+
+---
+
+## Gate 1: Assets (2026-10-29, branch `gate-1`)
+
+### Delivered
+
+- **Page renders.** 16 at 300 dpi from the colour PDFs: 14 interior pages and 2
+  cover wraps, in `assets/pages/` (`pipeline/render_pages.sh`).
+- **18 cut-outs** in `assets/cutouts/`, with `index.json`. Every cut-out in the
+  brief's index that a storyboard uses, for both videos, plus the SkillCard sources.
+  - Contact sheet: `out/stills/gate1-cutouts.png`.
+  - Each crop box drawn on its page: `out/stills/gate1-crop-boxes.png`.
+  - The pages, cut-outs and sheets are not in git (they come from paid PDFs);
+    `npm run cutouts` regenerates all of them in about 30 s, and
+    `pipeline/bootstrap.sh` does so on a fresh container when the PDFs are present.
+- **Footage inventory.** None: this is an animation-only video.
+- **Voiceover chain.** `pipeline/clean_vo.sh` (scope 6.3 chain, de-esser
+  `i=0.4:m=0.5:f=0.5:s=o` per correction 10, two-pass loudnorm to -16 LUFS / -1.5
+  dBTP, 48 kHz 24-bit mono) and `pipeline/measure_loudness.sh` (EBU R128 report;
+  `--target -14 -1` fails out-of-spec files for Gate 4). Tested on a synthetic 12 s
+  read only: -40.0 LUFS in, -16.0 LUFS / -4.0 dBTP out. No cleaned samples of
+  Jon's voice yet; see the gaps list.
+- `pipeline/contact_sheet.py frames VIDEO` (one frame every 2 s) is ready for Gate 4.
+
+### The cut-outs
+
+"20 px at" is the on-screen width at which the cut-out's main text, and then its
+smallest text, reaches the scope's 20 px minimum. Layout widths: 16:9 full grid
+1728 px, half 852 px; 9:16 safe zone 900 px.
+
+| Cut-out | Used in | Source | Native px | Main text 20 px at | Smallest text 20 px at |
+|---|---|---|---|---|---|
+| `s04-scoring-table` | main 4c | mens p9 | 1696 x 219 | 958 px (8.5 pt) | 1147 px (7.1 pt) |
+| `s06-strength-windows` | main 6a SkillCard 1 | mens p5 | 1696 x 345 | 958 px (8.5 pt) | 1147 px (7.1 pt) |
+| `s06-worked-example` | main 6b | mens p12 | 1696 x 521 | 936 px (8.7 pt) | 1100 px (7.4 pt) |
+| `s06-split-jerk-focus` | main 6c, reel r5 | mens p14 | 1696 x 605 | 958 px (8.5 pt) | 1147 px (7.1 pt) |
+| `s06-drills` | main 6c | mens p14 | 1697 x 831 | 958 px (8.5 pt) | 1147 px (7.1 pt) |
+| `s06-inside-each-window` | main 6d | mens p144 | 1697 x 1109 | 958 px (8.5 pt) | 1147 px (7.1 pt) |
+| `s07-metconx-mens` | main 7a | mens p6 | 1697 x 989 | 958 px (8.5 pt) | 1147 px (7.1 pt) |
+| `s07-metconx-womens` | main 7a (correction 7) | womens p6 | 1697 x 989 | 958 px (8.5 pt) | 1147 px (7.1 pt) |
+| `s07-where-time-goes` | main 7a | mens p20 | 1697 x 1095 | 958 px (8.5 pt) | 1147 px (7.1 pt) |
+| `s07-db-bench` | main 7b SkillCard 2, reel r6 | mens p21 | 1673 x 373 | 854 px (9.4 pt) | 854 px (9.4 pt) |
+| `s07-sandbag-carry` | main 7b SkillCard 3, reel r6 | mens p21 | 1653 x 372 | 844 px (9.4 pt) | 844 px (9.4 pt) |
+| `s08-run-pace` | main 8b | mens p16 | 1696 x 711 | 958 px (8.5 pt) | 1147 px (7.1 pt) |
+| `s09-week2-monday` | main 9 background, 25% | mens p53 | 2100 x 2999 | texture |  |
+| `s10-heavy-strength` | main 10b | mens p79 | 1752 x 1209 | 1255 px (6.7 pt) | 1502 px (5.6 pt) |
+| `s10-athx-triangle` | main 10b | mens p54 | 1748 x 1066 | 1252 px (6.7 pt) | 1498 px (5.6 pt) |
+| `s10-run-and-ski` | main 10b | mens p90 | 1761 x 1015 | 1262 px (6.7 pt) | 1509 px (5.6 pt) |
+| `s10-cover-mens` | main 10c, reel r7 | mens cover wrap | 2099 x 2999 | cover |  |
+| `s10-cover-womens` | main 10c, reel r7 | womens cover wrap | 2099 x 2999 | cover |  |
+
+### How the crops are made (correction 9)
+
+`pipeline/crops.json` names each element by its **first and last line of text**,
+never by coordinates. `pipeline/resolve_crops.py` then:
+- finds those lines with `pdftotext -bbox`;
+- snaps outwards on the 300 dpi render until 28 px (about 6.7 pt) of clear paper
+  on every side, so fills, rules and the orange edge bars are inside however far
+  they reach past the text;
+- adds the scope's 8 px margin, checks that margin is clear paper, and fails
+  rather than guess if it is not.
+
+It writes the pixel box back into `crops.json`, and a full regenerate reproduces
+it byte for byte. `--grid ID` draws any crop on a 100 px coordinate grid for
+checking by eye.
+
+`pipeline/book.py` holds the page geometry:
+- **Bleed:** 9 pt top, bottom and on the outside edge (right on odd pages, left on
+  even); the margins alternate to match.
+- **Women's page mapping (correction 2):** `book_page()`.
+- **Covers:** the wraps' front panel, cut at the trim. The fore-edge accent strip
+  is 70 px wide, 33 px of it inside the trim, so the cover keeps it as printed and
+  no bleed shows.
+
+`assets/cutouts/index.json` also records every text row inside each cut-out as px
+boxes with its text and cells, for the row-by-row builds, highlight bands and
+underlines at Gate 2. For example, the p9 table's TOTAL column cells, for the
+yellow highlight in 4c.
+
+### Decisions
+
+- **Edition.** Men's, as brief 5.2 indexes it, except the women's p6 beside the
+  men's in 7a (correction 7). See Q10.
+- **SkillCard cut-outs (correction 6).**
+  - Card 1 (6a): the p5 Strength Zone window table.
+  - Cards 2 and 3 (7b, reel r6): p21's "The DB bench press" and "Sandbag squats
+    into the carry", heading and first paragraph. Each paragraph says why the
+    movement is new or hard, which is what the card's one line points at.
+- **p6 crops take the heading.** "MetCon X", its edition-coloured rule and the
+  one-line description (which matches VO 7a) go with the table. The tables
+  themselves are grey in both editions, so the rule is what tells them apart.
+- **Day pages (10b)** take the text column's width, not the page's, from just
+  above the week label to the end of the session table. Cropping at the trim width
+  pushed the main text's 20 px width past what the frame can show.
+- **Scene 9 background:** the whole trimmed p53, marked as texture (25%), so it is
+  exempt from the legibility check.
+- **Run pace table (8b):** cropped whole; which three rows show is Q12. The row
+  geometry is in the index either way.
+
+### Findings
+
+- **Editions.** Text is identical in both editions on every cut-out page except:
+  - p6 (MetCon X loads);
+  - p54 / women's p57 (ATHX Triangle calories and loads);
+  - p53 / women's p56 (DB bench 20 kg against 12.5 kg; background only).
+- **Legibility.** The book sets table text at 8.5 pt and labels at 7.1 pt, so a
+  table cut-out needs about 960 px of screen width for 20 px text, 1150 px for
+  its labels. One cut-out at a time works at full width. Two side by side at half
+  width (852 px) give about 18 px text. The day pages (6.7 pt) need about
+  1250 px. The reel's split jerk table at the 900 px safe width gives about 19 px.
+  See Q11 and Q13.
+
+### Gaps list
+
+| Needed | For | When |
+|---|---|---|
+| A 30 s voiceover test from Jon (any paragraph, the real room and mic) | Tuning `clean_vo.sh` by ear before the full read; the plan's mitigation for an echoey room | Now, if possible |
+| The full read: `vo-s01` to `vo-s10` (nine files) and `vo-reel.wav` | Gate 3 animatic | Gate 3 |
+| One licensed music track (95 to 115 BPM, no vocals, 6 min or loopable) and its licence | Gate 3 animatic | Gate 3 |
+| Volume-Progression PDF | Optional Scene 10 background | Optional |
+| App screen recording of the ATHX programme | Optional Scene 10 | Optional |
+
+### Questions
+
+- **Q10. Edition balance.** Twelve of the sixteen book cut-outs read word for word
+  the same in both editions; only the accent colour differs. With the brief's men's pages,
+  orange appears in every book shot and purple only in 7a and the women's cover.
+  Options:
+  - (a) Keep men's throughout, as briefed.
+  - (b) **Recommended:** alternate by scene, so neither edition reads as "the book":
+    men's for Scenes 4, 6 and 8, women's for the 7a "Where the time goes" table,
+    the 7b cards, the Scene 9 background and Scene 10b. The 10b ATHX Triangle page
+    would then show the women's loads. Each is a one-word change in `crops.json`.
+- **Q11. Scene 7a layout.** Men's and women's p6 side by side fit only at half
+  width, where their table text is about 18 px, under the 20 px minimum. Options:
+  - (a) **Recommended:** in sequence at full width. Men's builds row by row, then
+    the women's replaces it with its ATHX column highlighted, then p20.
+  - (b) Side by side at about 18 px, as a stated exception to the rule.
+  - (c) Crop both to the ELEMENT and ATHX columns so they fit side by side at full
+    size. This drops Lite and Pro and joins two separate crops, which edges
+    towards rearranging the page.
+- **Q12. Scene 8b, which three rows?** The brief says three rows of the run pace
+  table.
+  - **Recommended:** the header plus 4:30, 4:15 and 4:00 /km, contiguous rows
+    where mid-pack athletes sit. They show each 15 s per km buying about 45 s more
+    ski. The component masks to them; nothing is re-cut.
+- **Q13. Small print inside cut-outs.** Column headings and labels (5.6 to 7.1 pt)
+  fall under 20 px wherever the main text only just reaches it: the day pages, and
+  any half-width layout. The reel's split jerk table is about 19 px main text at
+  the 9:16 safe width.
+  - **Recommended:** apply the 20 px rule to each cut-out's main text, treat
+    headings and labels as context, and accept the reel table at 19 px.
 
 ---
 

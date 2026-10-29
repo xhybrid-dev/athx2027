@@ -168,6 +168,18 @@ vo=$(ls assets/audio/vo/*.wav 2>/dev/null | wc -l)
 music=$(ls assets/audio/music/* 2>/dev/null | wc -l)
 ok "voiceover WAVs: $vo, music files: $music"
 
+echo "9. Cut-outs (generated from the PDFs, not in git)"
+if [[ -s assets/cutouts/index.json ]]; then
+	ok "$(python3 -c 'import json; print(len(json.load(open("assets/cutouts/index.json"))["cutouts"]))') cut-outs in assets/cutouts/"
+elif ! ls assets/pdf/ATHX-2027-*.pdf >/dev/null 2>&1; then
+	warn "no PDFs yet, so no cut-outs; add them and re-run"
+elif [[ $CHECK_ONLY -eq 1 ]]; then
+	fail "cut-outs missing (run: npm run cutouts)"
+else
+	fixing "npm run cutouts"
+	npm run -s cutouts >/dev/null && ok "cut-outs regenerated" || fail "npm run cutouts failed"
+fi
+
 echo
 if [[ $FAILED -ne 0 ]]; then echo "Bootstrap: FAILED (see above)"; exit 1; fi
 echo "Bootstrap: ready"
