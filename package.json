@@ -6,11 +6,12 @@
   "scripts": {
     "studio": "remotion studio src/index.ts",
     "typecheck": "tsc --noEmit",
-    "check": "tsc --noEmit && tsx scripts/check.ts",
+    "check": "tsc --noEmit && tsx scripts/check.ts && tsx scripts/vo-script.ts --check",
     "render:test": "remotion render src/index.ts RenderTest out/tests/render-test.mp4",
     "still:test": "remotion still src/index.ts RenderTest out/stills/render-test.png --frame=24",
     "still:test:portrait": "remotion still src/index.ts RenderTestPortrait out/stills/render-test-portrait.png --frame=24",
-    "cutouts": "pipeline/render_pages.sh && python3 pipeline/resolve_crops.py && python3 pipeline/crop_cutouts.py && python3 pipeline/contact_sheet.py cutouts && python3 pipeline/contact_sheet.py overlays"
+    "cutouts": "pipeline/render_pages.sh && python3 pipeline/resolve_crops.py && python3 pipeline/crop_cutouts.py && python3 pipeline/contact_sheet.py cutouts && python3 pipeline/contact_sheet.py overlays",
+    "vo-script": "tsx scripts/vo-script.ts"
   },
   "dependencies": {
     "@remotion/cli": "4.0.539",

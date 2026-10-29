@@ -9,7 +9,8 @@ You work as a senior motion designer and editor, not a template filler.
    components, pipeline, gates, QA).
 2. `VIDEO-BRIEF-HYROX-ATHX.md`: what to build for HYROX or ATHX? Where it refers
    to Part 1 of `VIDEO-BRIEF.md`, use Sections 2, 4 and 6 of the scope instead.
-3. `PRODUCTION-PLAN.md`: agreed fixes and the VO recording script.
+3. `PRODUCTION-PLAN.md`: agreed fixes. Its recording script is superseded by
+   `VO-SCRIPT.md`, which is generated from `src/data/voScript.ts` (`npm run vo-script`).
 4. `EDIT-LOG.md`: every decision since, the current gate, and open questions.
    It overrides the brief where they differ. Keep it up to date.
 

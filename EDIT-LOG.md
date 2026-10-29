@@ -14,6 +14,7 @@ pipeline/check_pdfs.sh         # page counts and RGB check of assets/pdf
 npm run cutouts                # pages, crops, cut-outs and contact sheets from the PDFs
 pipeline/clean_vo.sh           # assets/audio/vo/*.wav -> vo-clean/, -16 LUFS
 pipeline/measure_loudness.sh   # EBU R128 report; --target -14 -1 for the final mix
+npm run vo-script              # regenerate VO-SCRIPT.md from src/data/voScript.ts
 npm run studio                 # Remotion Studio (needs a port forward to view)
 npm run render:test            # the Gate 0 one-second render
 npm run still:test:portrait    # the same card at 1080 x 1920
@@ -24,8 +25,8 @@ npm run still:test:portrait    # the same card at 1080 x 1920
 | Gate | State |
 |---|---|
 | 0. Setup | Approved 2026-10-29 |
-| 1. Assets | **Delivered 2026-10-29 on branch `gate-1`, awaiting review** (Q10 to Q13) |
-| 2. Design | Next: components, stills in both aspects, 10 s motion test |
+| 1. Assets | **Approved 2026-10-29** (Q10 to Q13 answered); branch `gate-1` |
+| 2. Design | Next, on branch `gate-2`: components, stills in both aspects, 10 s motion test |
 
 ---
 
@@ -179,6 +180,49 @@ yellow highlight in 4c.
   the 9:16 safe width.
   - **Recommended:** apply the 20 px rule to each cut-out's main text, treat
     headings and labels as context, and accept the reel table at 19 px.
+
+
+### Answers (2026-10-29)
+
+- **Q10, edition balance: (b), alternate.** Jon: "equality of content between men's
+  and women's is important". Applied in `crops.json`, eight book cut-outs from each
+  edition plus one cover each:
+  - Men's: Scenes 4, 6 and 8, and the men's p6 in 7a.
+  - Women's: the women's p6 and "Where the time goes" in 7a, both 7b cards (so the
+    reel's r6 too), the Scene 9 background, and the three 10b day pages (pp 82, 57
+    and 93; the ATHX Triangle page shows the women's loads).
+  - Every women's crop resolved through the +3 mapping on the first run, which
+    also confirms correction 2 against real pages.
+  - Rule for Gate 2: wherever both editions share a shot (7a, the 10c covers),
+    they get equal size and equal time.
+- **Q11, Scene 7a: (a), in sequence at full width.** Jon: keep it moving and
+  dynamic, without adding length or reading time. For Gate 2:
+  - Men's p6 builds row by row, holds the minimum 1.5 s, then the women's p6 wipes
+    in over it with its ATHX column already highlighted.
+  - "Where the time goes" follows the same way.
+  - Overlapping entrances, not three full build-and-hold cycles, so the shot stays
+    inside its planned length.
+- **Q12, Scene 8b rows: agreed.** The header plus 4:30, 4:15 and 4:00 /km, masked in
+  the component.
+- **Q13, small print: agreed.** The 20 px minimum applies to each cut-out's main
+  text. Column headings and labels are context. The reel's split jerk table at
+  about 19 px is accepted.
+
+### Voiceover script
+
+`VO-SCRIPT.md` is the recording script for Jon. It is generated from
+`src/data/voScript.ts` with the planned shot times (`npm run vo-script`), and
+`npm run check` fails if it falls out of date, so the words exist in one place
+only. It covers:
+- both reads: nine scene files, 626 words, and `vo-reel.wav`, 79 words;
+- the 30-second test (paragraph 5a, 75 words) and the recording rules.
+
+The main-video paragraphs were checked word for word against `PRODUCTION-PLAN.md`'s
+recording script: all 21 match. That script is superseded for recording, as it
+lacks the reel lines.
+
+One rule it states that the Gate 3 VO pipeline must honour: a paragraph re-recorded
+as its own file (`vo-6b.wav`) replaces that paragraph in the scene file.
 
 ---
 

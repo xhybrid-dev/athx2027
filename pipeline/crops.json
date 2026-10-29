@@ -127,14 +127,14 @@
       "id": "s07-where-time-goes",
       "use": "main 7a",
       "what": "Where the time goes",
-      "edition": "mens",
+      "edition": "womens",
       "bookPage": 20,
       "mode": "element",
       "anchor": {
         "first": "Where the time goes",
         "last": "Total"
       },
-      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "pdf": "assets/pdf/ATHX-2027-Womens.pdf",
       "page": 20,
       "box": [209, 1119, 1906, 2214]
     },
@@ -142,14 +142,14 @@
       "id": "s07-db-bench",
       "use": "main 7b SkillCard 2, reel r6",
       "what": "The DB bench press, first paragraph",
-      "edition": "mens",
+      "edition": "womens",
       "bookPage": 21,
       "mode": "element",
       "anchor": {
         "first": "The DB bench press",
         "last": "not have done much pressing"
       },
-      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "pdf": "assets/pdf/ATHX-2027-Womens.pdf",
       "page": 21,
       "box": [232, 1503, 1905, 1876]
     },
@@ -157,14 +157,14 @@
       "id": "s07-sandbag-carry",
       "use": "main 7b SkillCard 3, reel r6",
       "what": "Sandbag squats into the carry, first paragraph",
-      "edition": "mens",
+      "edition": "womens",
       "bookPage": 21,
       "mode": "element",
       "anchor": {
         "first": "Sandbag squats into the carry",
         "last": "most. The carry then uses"
       },
-      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
+      "pdf": "assets/pdf/ATHX-2027-Womens.pdf",
       "page": 21,
       "box": [232, 238, 1885, 610]
     },
@@ -187,19 +187,19 @@
       "id": "s09-week2-monday",
       "use": "main 9 background, 25%",
       "what": "Week 2 Monday day page, whole",
-      "edition": "mens",
+      "edition": "womens",
       "bookPage": 53,
       "mode": "page",
-      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
-      "page": 53,
-      "box": [0, 38, 2100, 3037],
-      "texture": true
+      "texture": true,
+      "pdf": "assets/pdf/ATHX-2027-Womens.pdf",
+      "page": 56,
+      "box": [38, 38, 2137, 3037]
     },
     {
       "id": "s10-heavy-strength",
       "use": "main 10b",
       "what": "Week 5 Wednesday, header to the lower heavy table",
-      "edition": "mens",
+      "edition": "womens",
       "bookPage": 79,
       "mode": "day-page",
       "anchor": {
@@ -207,15 +207,15 @@
         "last": "D Copenhagen Plank"
       },
       "gap": 12,
-      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
-      "page": 79,
-      "box": [190, 160, 1942, 1369]
+      "pdf": "assets/pdf/ATHX-2027-Womens.pdf",
+      "page": 82,
+      "box": [167, 160, 1919, 1369]
     },
     {
       "id": "s10-athx-triangle",
       "use": "main 10b",
       "what": "Week 2 Tuesday, header to the ATHX Triangle table",
-      "edition": "mens",
+      "edition": "womens",
       "bookPage": 54,
       "mode": "day-page",
       "anchor": {
@@ -223,15 +223,15 @@
         "last": "Then: steady ski"
       },
       "gap": 12,
-      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
-      "page": 54,
-      "box": [167, 160, 1915, 1226]
+      "pdf": "assets/pdf/ATHX-2027-Womens.pdf",
+      "page": 57,
+      "box": [190, 160, 1938, 1226]
     },
     {
       "id": "s10-run-and-ski",
       "use": "main 10b",
       "what": "Week 6 Saturday, header to the run and ski table",
-      "edition": "mens",
+      "edition": "womens",
       "bookPage": 90,
       "mode": "day-page",
       "anchor": {
@@ -239,9 +239,9 @@
         "last": "Score total ski metres"
       },
       "gap": 12,
-      "pdf": "assets/pdf/ATHX-2027-Mens.pdf",
-      "page": 90,
-      "box": [167, 160, 1928, 1175]
+      "pdf": "assets/pdf/ATHX-2027-Womens.pdf",
+      "page": 93,
+      "box": [190, 160, 1951, 1175]
     },
     {
       "id": "s10-cover-mens",
