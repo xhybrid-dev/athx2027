@@ -5,7 +5,7 @@
 // voScript.ts or sceneTimings.ts.
 
 import * as facts from '../src/data/facts';
-import {voScript, words, PLANNING_WPM, type VoId} from '../src/data/voScript';
+import {voScript, words, PLANNING_WPM, TEST_READ_WPM, type VoId} from '../src/data/voScript';
 import {
 	FPS,
 	buildTimeline,
@@ -17,6 +17,7 @@ import {
 	timelines,
 	voPadding,
 	type VideoPlan,
+	type VoTimings,
 } from '../src/data/sceneTimings';
 import {motion} from '../src/easing';
 
@@ -167,14 +168,21 @@ const checkVideo = (video: VideoPlan, expectedEnd: string) => {
 		}
 	}
 
-	const projectedSeconds = projected.durationInFrames / FPS;
-	console.log(`\nScript:        ${words_} words, ${formatTc((words_ * 60) / PLANNING_WPM)} of speech at ${PLANNING_WPM} wpm`);
+	// Jon's measured pace is what the real read will most likely be; warn on that.
+	const atTestPace = buildTimeline(
+		video,
+		Object.fromEntries(
+			voScript.map((p) => [p.id, {file: p.file, inSeconds: 0, durationSeconds: (words(p.text).length * 60) / TEST_READ_WPM}]),
+		) as VoTimings,
+	);
+	const testSeconds = atTestPace.durationInFrames / FPS;
+	console.log(`\nScript:        ${words_} words, ${formatTc((words_ * 60) / PLANNING_WPM)} of speech at ${PLANNING_WPM} wpm, ${formatTc((words_ * 60) / TEST_READ_WPM)} at Jon's ${TEST_READ_WPM}`);
 	console.log(`Planned cut:   ${formatTc(planned.durationInFrames / FPS)} (${planned.durationInFrames} frames), target ${range(video)}`);
-	console.log(`Projected cut: ${formatTc(projectedSeconds)} (${projected.durationInFrames} frames) if read at ${PLANNING_WPM} wpm`);
+	console.log(`Projected cut: ${formatTc(projected.durationInFrames / FPS)} if read at ${PLANNING_WPM} wpm; ${formatTc(testSeconds)} at Jon's tested ${TEST_READ_WPM} wpm`);
 	console.log(`Rendered now:  ${formatTc(rendered.durationInFrames / FPS)}, ${rendered.conformed.length} shots conformed to recorded VO`);
 	warn(
-		projectedSeconds >= video.lengthRange.min && projectedSeconds <= video.lengthRange.max,
-		`${video.id}: projected cut ${formatTc(projectedSeconds)} is outside ${range(video)}`,
+		testSeconds >= video.lengthRange.min && testSeconds <= video.lengthRange.max,
+		`${video.id}: projected cut at Jon's ${TEST_READ_WPM} wpm, ${formatTc(testSeconds)}, is outside ${range(video)}`,
 	);
 	return {plannedShots, planned};
 };

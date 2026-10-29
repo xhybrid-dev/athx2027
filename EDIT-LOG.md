@@ -26,7 +26,7 @@ npm run still:test:portrait    # the same card at 1080 x 1920
 | Gate | State |
 |---|---|
 | 0. Setup | Approved 2026-10-29 |
-| 1. Assets | **Approved 2026-10-29** (Q10 to Q13 answered); branch `gate-1`. Voiceover test processed; Jon's listening notes pending (Q14, Q15) |
+| 1. Assets | **Approved 2026-10-29** (Q10 to Q15 answered); branch `gate-1` |
 | 2. Design | Next, on branch `gate-2`: components, stills in both aspects, 10 s motion test |
 
 ---
@@ -91,7 +91,38 @@ Sent to Jon for listening:
 about a hand-span below the chin, or a dynamic mic a few centimetres away), hum
 sources switched off, and Voice Memos set to Lossless.
 
-**Open:**
+**Answers (2026-10-29):**
+- **Q14: Jon prefers the cleaned version.** The chain above is the baseline for
+  the real read. The test was on a mini mic; Jon will improve the placement, the
+  background noise and the recording quality for the full session.
+- **Q15: the test read Scene 1** (paragraph "1", 41 words) in 14.35 s, about
+  **171 words a minute**, against the plan's 150.
+
+**What that pace meant, and the change it forced.** Gate 0's conform rule (decision
+9) cut every voiced shot to read + 2.2 s. At 171 wpm that throws away most of the
+roughly 90 s the brief leaves beyond the voice, for reading tables and holding
+graphics: the main video projected to 4:45 against a 5:15 minimum, and the
+cut-down to 0:49 against 0:55.
+
+`sceneTimings.ts` now **keeps each shot's planned air**: the shots carrying a
+paragraph move by exactly how much the real read differs from the plan's 150 wpm
+read of it. The floors are unchanged: read + lead-in + tail, and each shot's
+minimum.
+
+| Read pace | Main, old rule | Main, new rule | Cut-down, new rule |
+|---|---|---|---|
+| 150 wpm | 5:14 | 5:55 | 1:03 |
+| 160 wpm | | 5:39 | 1:01 |
+| **171 wpm (Jon)** | **4:45** | **5:24** | **0:59** |
+
+So **Jon reads at his natural pace**; `VO-SCRIPT.md` now says so.
+
+- `voScript.ts` records the measured pace as `TEST_READ_WPM` (171).
+- `npm run check` projects both videos at it and warns if either leaves its range.
+- At 150 wpm the main video would run 11 s long. The real read replaces both
+  estimates at Gate 3.
+
+Earlier questions, now answered:
 - **Q14. Jon's ears on the A/B.** Too processed or "pumping"? Hiss or hum still
   audible? Harsh "s" sounds? Thin, or boomy? The chain is tuned from those notes.
   If the hum is still audible on the real recording, the next step is a narrow
@@ -494,7 +525,7 @@ specifies. Two ways forward:
 8. **Public folder is `assets/`**, so components use `staticFile('cutouts/x.png')`.
    Remotion copies it into each render bundle; at this project's size that is
    seconds. Revisit if the page renders grow large.
-9. **Timings model (correction 5).** `src/data/sceneTimings.ts` holds the
+9. **Timings model (correction 5).** The conform rule below was superseded at Gate 1 by one that keeps each shot's planned air (see the voiceover-test addendum). `src/data/sceneTimings.ts` holds the
    storyboard as planned, in m:ss, with every retime from correction 5. `npm run
    check` asserts each retime and the brief's YouTube chapters exactly.
    Compositions read `timelines.main` (and, since addendum 2, `timelines.reel`),

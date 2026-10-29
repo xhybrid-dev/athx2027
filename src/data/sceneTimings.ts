@@ -9,9 +9,15 @@
 //
 //   - Until voTimings.json holds a paragraph, its shots keep their planned length.
 //   - Once it does (written at Gate 3 from the cleaned WAVs), the shots carrying
-//     that paragraph are re-cut to the read: lead-in + speech + tail, never below
-//     the shot's minimum, and every later cut ripples. Shots with no voiceover
-//     (the title, the end card) keep their planned length.
+//     that paragraph move by exactly how much the real read differs from the
+//     planned one (150 wpm), so each shot keeps the time the brief leaves beyond
+//     the voice for reading tables and holding graphics. Two floors: the read
+//     plus lead-in and tail, and the shots' minimums. Every later cut ripples.
+//     Shots with no voiceover (the title, the end card) keep their planned length.
+//
+//     (Gate 0 cut every shot to read + 2.2 s instead. Jon's test read Scene 1 at
+//     171 wpm, at which that rule left the main video at 4:45 against a 5:15
+//     minimum; this one gives 5:24. See EDIT-LOG, Gate 1.)
 //
 // So a new read means re-running the VO pipeline and re-rendering; nothing here is
 // edited by hand. Boundaries are cut points: the composition centres each 10-frame
@@ -504,7 +510,13 @@ export const buildTimeline = (video: VideoPlan, vo: VoTimings = measured, {estim
 				const cueNeeds = group.flatMap((s) =>
 					(s.cues ?? []).map((c) => voPadding.leadSeconds + wordTime(voId, c, m) + CUE_SETTLE_SECONDS + HOLD_SECONDS),
 				);
-				const needed = Math.max(voPadding.leadSeconds + m.durationSeconds + tail, ...cueNeeds);
+				// The time the plan leaves beyond its own (150 wpm) read of this paragraph.
+				const air = plannedTotal - estimateVo(voId).durationSeconds;
+				const needed = Math.max(
+					voPadding.leadSeconds + m.durationSeconds + tail,
+					m.durationSeconds + air,
+					...cueNeeds,
+				);
 				lengths = planned.map((p, i) => Math.max(group[i]?.minSeconds ?? 0, (p / plannedTotal) * needed));
 				conformed.push(...group.map((s) => s.id));
 			}

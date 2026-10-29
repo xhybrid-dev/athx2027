@@ -163,3 +163,6 @@ export const words = (text: string) =>
 
 /** Natural read rate used to plan cuts before the recording exists. */
 export const PLANNING_WPM = 150;
+
+/** Jon's measured pace: the Scene 1 test read, 41 words in 14.35 s (Gate 1). */
+export const TEST_READ_WPM = 171;

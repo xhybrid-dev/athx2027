@@ -7,7 +7,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import {PLANNING_WPM, voById, words, type VoId} from '../src/data/voScript';
+import {PLANNING_WPM, TEST_READ_WPM, voById, words, type VoId} from '../src/data/voScript';
 import {main, reel, type VideoPlan} from '../src/data/sceneTimings';
 
 const OUT = path.join(import.meta.dirname, '..', 'VO-SCRIPT.md');
@@ -72,10 +72,10 @@ const render = (): string => {
 		'## How to record',
 		'',
 		'- **Mic close to the mouth.** A lav clipped to the chest about a hand-span below',
-		'  the chin (a wired lav into the iPhone works), or a dynamic mic a few',
-		'  centimetres away. The test, on the phone\'s own mic at a distance, came in',
-		'  quiet, with the room only about 22 dB under the voice: a close mic gains',
-		'  15 to 20 dB on that, more than any clean-up can.',
+		'  the chin, or a dynamic mic a few centimetres away, with its gain up so the',
+		'  voice comes in strongly. The test (on a mini mic) came in quiet, with the room',
+		'  only about 22 dB under the voice: closer placement and a quieter room gain',
+		'  more on that than any clean-up can.',
 		'- **Switch off what hums.** The test picked up a steady low hum at about',
 		'  100 Hz (typically a fridge, fan, heater, charger or light fitting). It sits',
 		'  in the same range as the voice, so it cannot be filtered out cleanly.',
@@ -89,7 +89,9 @@ const render = (): string => {
 		'  just that paragraph as its own file named after it (for example `vo-6b.wav`),',
 		'  which replaces it. Do not leave a second attempt inside the scene file.',
 		'- Pick one way of saying ATHX and keep it for the whole read.',
-		'- The times are targets, not limits: the cut follows your read.',
+		`- **Read at your natural pace.** The test read Scene 1 at about ${TEST_READ_WPM} words a minute,`,
+		'  and the edit is built around that: the cut follows your read. The times shown',
+		`  below are at ${PLANNING_WPM} words a minute and are only a guide.`,
 		'',
 		'---',
 		'',
