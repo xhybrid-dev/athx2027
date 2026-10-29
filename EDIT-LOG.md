@@ -64,12 +64,15 @@ npm run still:test:portrait    # the same card at 1080 x 1920
   "3 KM RUN. ONLY SKI METRES SCORE".
 - **Q9, reel r2: approved.** "...in about two and a half hours" stands. The seven
   reel lines go into Jon's recording session as one extra WAV, `vo-reel.wav`.
-- **Q4, own repo: yes.** The session's GitHub integration cannot create a repository
-  (403), so HybridX creates an empty private `xhybrid-dev/hybridx-video`. Then:
-  - Claude pushes this folder's full history to it (`git subtree split`, tested: 3
-    commits, the project at the repo root).
-  - Work continues there; this folder in the website repo is retired, and the
-    website branch `claude/hyrox-athx-video-gate0` can be deleted.
+- **Q4, own repo: done.** The session's GitHub integration cannot create a
+  repository (403), so HybridX created `xhybrid-dev/athx2027`, which also fits the
+  scope's other two videos, both ATHX 2027.
+  - The project's full history (4 commits) moved across with `git subtree split`,
+    with the project at the repo root, on `main`.
+  - A bootstrap from a fresh clone passed: npm ci, checks, 1 s render, all four PDFs.
+  - The `hybridx-video/` folder in the website repo is retired. It only ever lived
+    on the website branch `claude/hyrox-athx-video-gate0`, never on `master`, and
+    that branch can be deleted.
 - `CLAUDE.md` added, so a session opened on the new repo starts with the working
   rules and the bootstrap.
 
@@ -182,7 +185,8 @@ specifies. Two ways forward:
 
 ### Decisions
 
-1. **Project location.** `hybridx-video/` at the root of the website repo,
+1. **Project location.** Superseded: the project now lives in its own repo,
+   `xhybrid-dev/athx2027` (addendum 3). As first set up: `hybridx-video/` at the root of the website repo,
    self-contained (own `package.json`, `tsconfig.json`, `node_modules`). The root
    `tsconfig.json` and `vitest.config.ts` now exclude it. Without that, the site's
    `next build` typecheck would pick up the Remotion files on App Hosting, where
@@ -309,10 +313,9 @@ Answered (see the addenda): Q1 yellow `#FBD85B`; Q2 white logo; Q3 PDFs; Q5 69
 minutes, option (a); Q6 copy trims approved; Q7 cut-down in scope; Q8 colour
 interiors supplied; Q9 reel r2 approved.
 
-Open:
+Q4 own repo: `xhybrid-dev/athx2027`.
 
-- **Q4. Own repo.** Waiting on HybridX to create the empty private repository
-  `xhybrid-dev/hybridx-video` and give the Claude GitHub app access to it.
+Open: none for Gate 0.
 
 Not needed until Gate 3: the voiceover WAVs (`vo-s01` to `vo-s10`, plus
 `vo-reel.wav`) and the licensed music track with its licence. The
