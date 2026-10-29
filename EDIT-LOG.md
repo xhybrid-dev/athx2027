@@ -12,7 +12,8 @@ pipeline/bootstrap.sh --check  # report only
 npm run check                  # typecheck, facts and timings checks, VO fit report
 pipeline/check_pdfs.sh         # page counts and RGB check of assets/pdf
 npm run cutouts                # pages, crops, cut-outs and contact sheets from the PDFs
-pipeline/clean_vo.sh           # assets/audio/vo/*.wav -> vo-clean/, -16 LUFS
+pipeline/clean_vo.sh           # assets/audio/vo/* (wav, m4a, flac, aiff) -> vo-clean/*.wav, -16 LUFS
+python3 pipeline/analyse_vo.py FILE   # noise, hum, sibilance, peaks of a recording
 pipeline/measure_loudness.sh   # EBU R128 report; --target -14 -1 for the final mix
 npm run vo-script              # regenerate VO-SCRIPT.md from src/data/voScript.ts
 npm run studio                 # Remotion Studio (needs a port forward to view)
@@ -25,8 +26,79 @@ npm run still:test:portrait    # the same card at 1080 x 1920
 | Gate | State |
 |---|---|
 | 0. Setup | Approved 2026-10-29 |
-| 1. Assets | **Approved 2026-10-29** (Q10 to Q13 answered); branch `gate-1` |
+| 1. Assets | **Approved 2026-10-29** (Q10 to Q13 answered); branch `gate-1`. Voiceover test processed; Jon's listening notes pending (Q14, Q15) |
 | 2. Design | Next, on branch `gate-2`: components, stills in both aspects, 10 s motion test |
+
+---
+
+## Gate 1 addendum: the voiceover test (2026-10-29)
+
+**Received** `Athx_recording_test.m4a`, stored as `assets/audio/vo/vo-test.m4a`
+(not in git). An iPhone Voice Memo (iOS 27.0.1): AAC at 98 kbps, 48 kHz, two
+identical channels, 16.1 s, speech from 0.6 to 14.9 s.
+
+**What the recording shows** (`pipeline/analyse_vo.py`, new):
+- Quiet: -36.2 LUFS, peaks -17.1 dBFS, no clipping. Normal for a phone held at a
+  distance.
+- Background noise -61 to -63 dBFS, so the voice is only about 22 dB above the
+  room. For voiceover you want 40 dB or more.
+- The noise is mostly a **low hum around 100 Hz**, with more between 60 and
+  230 Hz: the 40 to 300 Hz band is -63 dBFS in pauses, every band above it -75 or
+  lower. 100 Hz is twice the UK mains frequency, so typically a fridge, fan,
+  heater, charger or light fitting. It sits on the voice's own fundamental, so a
+  filter cannot take it out cleanly.
+- The AAC encoder cuts everything above about 14 kHz.
+- The loudest moments are voiced, stressed syllables (300 Hz to 4 kHz), not
+  plosives or sibilance.
+- How much the room rings could not be measured: the noise sits too close under
+  the phrase ends.
+
+**What it showed about the chain.** As written in the scope, it delivered
+-19.3 LUFS instead of -16. `pipeline/clean_vo.sh` now has six changes, each tested
+on this file:
+
+1. **Mono first.** Both channels are identical, and measured before the downmix
+   they read 3 dB louder than the mono file written out. One version delivered
+   -18.9 LUFS for that reason alone.
+2. **Gain staging** to -14 LUFS before the chain. At -36 LUFS the compressor's
+   fixed -18 dB threshold never engaged.
+3. **The noise reducer's floor is measured per file.** After gain staging, the
+   fixed `nf=-25` stripped 5 dB from everything above 4 kHz: the consonants and
+   "s" sounds. A floor set from the measured noise keeps them. Pushing harder
+   gained about 2 dB less hiss for 2 dB of lost detail, so it stays gentle.
+4. **A gentle expander**, 8 dB over the measured noise, 10 dB range. Compression
+   lifts pauses along with the voice. The expander takes pauses from -34 to
+   -43 dBFS and leaves even the quietest fifth of the speech unchanged.
+5. **`alimiter` with `level=disabled`.** Its default auto-level turns the output
+   back up by 1/limit, so `limit=0.89` alone lets peaks return to 0 dBFS
+   (measured: +1.0 dB on a test tone).
+6. **Make-up gain, then a 4x oversampled limiter**, re-measured until within
+   0.2 LU of -16. A linear `loudnorm` cannot reach the target when the peaks will
+   not allow the gain, and its dynamic mode pumps on speech.
+
+The de-esser keeps its explicit parameters (correction 10).
+
+**Result:** `assets/audio/vo-clean/vo-test.wav` at -16.1 LUFS and -1.7 dBTP. The
+limiter trims peaks by at most 2.8 dB. Speech now sits 29.9 dB over the pauses,
+against 21.9 dB raw.
+
+Sent to Jon for listening:
+- an A/B file, the raw recording then the cleaned one, both at -20 LUFS so the
+  comparison is the processing, not the level;
+- the cleaned file at -16 LUFS.
+
+**`VO-SCRIPT.md` recording advice updated** from the test: a close mic (a lav
+about a hand-span below the chin, or a dynamic mic a few centimetres away), hum
+sources switched off, and Voice Memos set to Lossless.
+
+**Open:**
+- **Q14. Jon's ears on the A/B.** Too processed or "pumping"? Hiss or hum still
+  audible? Harsh "s" sounds? Thin, or boomy? The chain is tuned from those notes.
+  If the hum is still audible on the real recording, the next step is a narrow
+  notch at 100 Hz, but fixing it at the source is better.
+- **Q15. Which words did the test read?** 16 s is about half of paragraph 5a. With
+  the words, the test gives Jon's real reading pace, and so how the cut will
+  conform against the 150 wpm plan.
 
 ---
 
